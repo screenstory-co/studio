@@ -1,0 +1,61 @@
+---
+import sitesData from '../data/sites.json';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screenstory Studio</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #16191f;
+      --text: #e4e6eb;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --border: #21262d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 2rem;
+    }
+    .container { max-width: 720px; width: 100%; }
+    h1 { font-size: 1.75rem; margin-bottom: .5rem; }
+    p { color: var(--muted); margin-bottom: 2rem; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .site-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: .75rem; padding: 1.5rem;
+      text-decoration: none; color: inherit;
+      transition: border-color .2s, transform .1s;
+      display: block;
+    }
+    .site-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .site-card h2 { font-size: 1.125rem; margin-bottom: .25rem; }
+    .site-card .domain { color: var(--muted); font-size: .875rem; }
+    .site-card .repo { color: var(--muted); font-size: .75rem; margin-top: .75rem; font-family: ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Screenstory Studio</h1>
+    <p>Select a site to edit its content.</p>
+    <div class="grid">
+      {sitesData.sites.map(site => (
+        <a href={`/admin?site=${site.slug}`} class="site-card">
+          <h2>{site.name}</h2>
+          <div class="domain">{site.domain}</div>
+          <div class="repo">{site.repo}</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</body>
+</html>

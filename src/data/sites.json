@@ -1,0 +1,24 @@
+{
+  "sites": [
+    {
+      "slug": "yiapanis",
+      "name": "Yiapanis Films",
+      "domain": "yiapanis.co",
+      "repo": "screenstory-co/yiapanis.co",
+      "branch": "main",
+      "collections": ["profile", "films", "blog", "inDevelopment"],
+      "media_folder": "public/images",
+      "public_folder": "/images"
+    },
+    {
+      "slug": "screenstory",
+      "name": "Screenstory",
+      "domain": "screenstory.co",
+      "repo": "screenstory-co/screenstory.co",
+      "branch": "main",
+      "collections": ["profile", "films", "blog"],
+      "media_folder": "public/images",
+      "public_folder": "/images"
+    }
+  ]
+}
