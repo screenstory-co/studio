@@ -8,27 +8,21 @@
 </head>
 <body>
   <div id="nc-root"></div>
+
+  <script src="https://unpkg.com/decap-cms@3.5.0/dist/decap-cms.js"></script>
   <script>
-    (function() {
-      function go() {
-        var p = new URLSearchParams(location.search);
-        var site = p.get('site');
-        if (!site) { location.href = '/'; return; }
-        var s = document.createElement('script');
-        s.src = 'https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js';
-        s.onload = function() {
-          fetch('/api/config?site=' + encodeURIComponent(site))
-            .then(function(r){ if(!r.ok) return r.text().then(function(t){throw new Error(t)}); return r.json(); })
-            .then(function(cfg){ window.CMS.init({ config: cfg }); })
-            .catch(function(e){
-              document.body.innerHTML = '<div style=padding:2rem;><h2>CMS Error</h2><pre>' + (e.message||e) + '</pre></div>';
-            });
-        };
-        s.onerror = function(){ document.body.innerHTML = '<div style=padding:2rem;><h2>Failed to load CMS</h2></div>'; };
-        document.head.appendChild(s);
-      }
-      if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', go); else go();
-    })();
+    window.addEventListener('load', function() {
+      var p = new URLSearchParams(location.search);
+      var site = p.get('site');
+      if (!site) { location.href = '/'; return; }
+      document.getElementById('nc-root').innerHTML = '';
+      fetch('/api/config?site=' + encodeURIComponent(site))
+        .then(function(r){ if(!r.ok) return r.text().then(function(t){throw new Error(t)}); return r.json(); })
+        .then(function(cfg){ window.CMS.init({ config: cfg }); })
+        .catch(function(e){
+          document.body.innerHTML = '<div style="padding:2rem;font-family:sans-serif"><h2>CMS Error</h2><pre>' + (e.message||e) + '</pre></div>';
+        });
+    });
   </script>
 </body>
 </html>
