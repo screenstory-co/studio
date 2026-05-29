@@ -2,7 +2,7 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const url = new URL(request.url);
 
-  const clientId = env.GITHUB_CLIENT_ID;
+  const clientId = 'Ov23lirLT8QBZUkpmOUc';
   if (!clientId) return new Response('GITHUB_CLIENT_ID not configured', { status: 500 });
 
   const code = url.searchParams.get('code');
