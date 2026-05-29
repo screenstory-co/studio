@@ -10,25 +10,26 @@
 <body>
   <div id="nc-root"></div>
 
-  <script src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
-  <script>
-    (async function() {
+  <script is:inline src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
       const params = new URLSearchParams(window.location.search);
       const site = params.get('site');
       if (!site) {
         window.location.href = '/';
         return;
       }
-      try {
-        const resp = await fetch('/api/config?site=' + encodeURIComponent(site));
-        if (!resp.ok) throw new Error(await resp.text());
-        const config = await resp.json();
-        CMS.init({ config });
-      } catch (err) {
-        console.error(err);
-        document.body.innerHTML = '<div style="padding:2rem;font-family:sans-serif"><h2>Error loading CMS config</h2><pre>' + err.message + '</pre></div>';
-      }
-    })();
+      fetch('/api/config?site=' + encodeURIComponent(site))
+        .then(function(resp) {
+          if (!resp.ok) return resp.text().then(function(t) { throw new Error(t); });
+          return resp.json();
+        })
+        .then(function(config) { CMS.init({ config }); })
+        .catch(function(err) {
+          console.error(err);
+          document.body.innerHTML = '<div style="padding:2rem;font-family:sans-serif"><h2>Error loading CMS config</h2><pre>' + (err.message || err) + '</pre></div>';
+        });
+    });
   </script>
 </body>
 </html>
