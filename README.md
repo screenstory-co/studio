@@ -44,3 +44,4 @@ Required env vars (set in Cloudflare Pages dashboard):
 - `GITHUB_CLIENT_ID` — GitHub OAuth App client ID
 - `GITHUB_CLIENT_SECRET` — GitHub OAuth App client secret
 
+# v1
